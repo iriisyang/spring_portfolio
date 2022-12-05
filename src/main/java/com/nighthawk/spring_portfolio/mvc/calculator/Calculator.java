@@ -24,6 +24,7 @@ public class Calculator {
     private final Map<String, Integer> OPERATORS = new HashMap<>();
     {
         // Map<"token", precedence>
+        OPERATORS.put("^", 2);
         OPERATORS.put("*", 3);
         OPERATORS.put("/", 3);
         OPERATORS.put("%", 3);
@@ -44,6 +45,8 @@ public class Calculator {
     public Calculator(String expression) {
         // original input
         this.expression = expression;
+
+        this.parenthesisCheck();
 
         // parse expression into terms
         this.termTokenizer();
@@ -73,6 +76,24 @@ public class Calculator {
         return (OPERATORS.get(token1) - OPERATORS.get(token2) >= 0) ;
     }
 
+    // Parenthesis Check
+
+    private void parenthesisCheck() {
+        int leftParentheses = 0;
+        int rightParentheses = 0;
+        for (int i = 0; i < this.expression.length(); i++) {
+            if (this.expression.charAt(i) == '(') {
+                leftParentheses++;
+            } else if (this.expression.charAt(i) == ')') {
+                rightParentheses++;
+            }
+        }
+
+        if (leftParentheses != rightParentheses) {
+            throw new RuntimeException("Parentheses error, make sure your parentheses are balanced.");
+        }
+    }
+    
     // Term Tokenizer takes original expression and converts it to ArrayList of tokens
     private void termTokenizer() {
         // contains final list of tokens
@@ -132,6 +153,7 @@ public class Calculator {
                 case "*":
                 case "/":
                 case "%":
+                case "^":
                     // While stack
                     // not empty AND stack top element
                     // and is an operator
@@ -170,9 +192,39 @@ public class Calculator {
             if (isOperator(token))
             {
                 // Pop the two top entries
+                double a = calcStack.pop();
+                double b = calcStack.pop();
 
                 // Calculate intermediate results
-                result = 0.0;
+                switch (token) {
+
+                    case "+":
+                        result = b + a; 
+                        break; 
+                    
+                    case "-":
+                        result = b - a;
+                        break;
+                    
+                    case "*":
+                        result = b * a; 
+                        break; 
+                    
+                    case "/":
+                        result = b / a; 
+                        break; 
+                        
+                    case "%":
+                        result = b % a; 
+                        break; 
+                    
+                    case "^":
+                        result = Math.pow(b,a);
+                        break;
+
+                    default: 
+                        break;
+                }
 
                 // Push intermediate result back onto the stack
                 calcStack.push( result );
@@ -221,5 +273,14 @@ public class Calculator {
         Calculator divisionMath = new Calculator("300/200");
         System.out.println("Division Math\n" + divisionMath);
 
+        System.out.println();
+
+        Calculator exponentMath = new Calculator("5^6");
+        System.out.println("Exponent Math\n" + exponentMath);
+
+        System.out.println();
+
+        Calculator parenthesisImbalanceMath = new Calculator("(100*30))+2");
+        System.out.println("Checking parenthesis imbalance\n" + parenthesisImbalanceMath);
     }
 }

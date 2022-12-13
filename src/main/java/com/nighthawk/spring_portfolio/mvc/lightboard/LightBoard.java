@@ -1,5 +1,6 @@
 package com.nighthawk.spring_portfolio.mvc.lightboard;
 
+import java.util.Scanner;  
 import lombok.Data;
 
 @Data  // Annotations to simplify writing code (ie constructors, setters)
@@ -71,8 +72,8 @@ public class LightBoard {
     /* Output is intended for Terminal, draws color palette */
     public String toColorPalette() {
         // block sizes
-        final int ROWS = 5;
-        final int COLS = 10;
+        final int ROWS = 6;
+        final int COLS = 7;
 
         // Build large string for entire color palette
         String outString = "";
@@ -116,12 +117,28 @@ public class LightBoard {
         outString += "\033[m";
 		return outString;
     }
+    public void chooseColor() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Red RBG value");
+        Short red = sc.nextShort();
+        System.out.println("Enter Green RBG value");
+        Short green = sc.nextShort();
+        System.out.println("Enter Blue RBG value");
+        Short blue = sc.nextShort();
+        System.out.println("Enter row value");
+        int row = sc.nextInt();
+        System.out.println("Enter column value");
+        int col = sc.nextInt();
+        lights[row][col].setRGB(red, green, blue);
+        sc.close();
+    }
     
     static public void main(String[] args) {
         // create and display LightBoard
-        LightBoard lightBoard = new LightBoard(5, 5);
+        LightBoard lightBoard = new LightBoard(6, 6);
         System.out.println(lightBoard);  // use toString() method
         System.out.println(lightBoard.toTerminal());
+        lightBoard.chooseColor();
         System.out.println(lightBoard.toColorPalette());
     }
 }

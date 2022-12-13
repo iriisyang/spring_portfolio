@@ -119,15 +119,15 @@ public class LightBoard {
     }
     public void chooseColor() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Red RBG value");
+        System.out.println("enter red rbg value");
         Short red = sc.nextShort();
-        System.out.println("Enter Green RBG value");
+        System.out.println("enter green rbg value");
         Short green = sc.nextShort();
-        System.out.println("Enter Blue RBG value");
+        System.out.println("enter blue rbg value");
         Short blue = sc.nextShort();
-        System.out.println("Enter row value");
+        System.out.println("enter row of cell that color you want to change");
         int row = sc.nextInt();
-        System.out.println("Enter column value");
+        System.out.println("enter column of cell that color you want to change");
         int col = sc.nextInt();
         lights[row][col].setRGB(red, green, blue);
         sc.close();

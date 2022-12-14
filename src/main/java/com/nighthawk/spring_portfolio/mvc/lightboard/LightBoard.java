@@ -125,20 +125,22 @@ public class LightBoard {
         Short green = sc.nextShort();
         System.out.println("enter blue rbg value");
         Short blue = sc.nextShort();
+        System.out.println("enter effect you would like");
+        Short effect = sc.nextShort();
         System.out.println("enter row of cell that color you want to change");
         int row = sc.nextInt();
         System.out.println("enter column of cell that color you want to change");
         int col = sc.nextInt();
-        lights[row][col].setRGB(red, green, blue);
+        lights[row][col].setRGB(red, green, blue, effect);
         sc.close();
     }
     
     static public void main(String[] args) {
         // create and display LightBoard
         LightBoard lightBoard = new LightBoard(6, 6);
+        lightBoard.chooseColor();
         System.out.println(lightBoard);  // use toString() method
         System.out.println(lightBoard.toTerminal());
-        lightBoard.chooseColor();
         System.out.println(lightBoard.toColorPalette());
     }
 }

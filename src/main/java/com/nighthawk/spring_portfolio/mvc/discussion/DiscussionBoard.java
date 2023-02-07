@@ -9,7 +9,7 @@ public class DiscussionBoard {
     private Long id;
 
     @Column(unique=true)
-    private String question;
+    private String Question;
     
     @Column
     private String Unit;
@@ -21,16 +21,17 @@ public class DiscussionBoard {
 
     }
 
-    protected DiscussionBoard(Long id, String question, String Unit, String Tags) {
-        if (question == null) throw new NullPointerException("question");
+    protected DiscussionBoard(Long id, String Question, String Unit, String Tags) {
+        if (Question == null) 
+            throw new NullPointerException("Question");
         this.Unit = Unit;
-        System.out.println(question);
-        this.question = question;
+        System.out.println(Question);
+        this.Question = Question;
         this.Tags = Tags;
     }
 
     public String getQuestion() {
-        return this.question;
+        return this.Question;
     }
 
     public String getUnit() {
@@ -41,8 +42,8 @@ public class DiscussionBoard {
         return this.Tags;
     }
 
-    public void setQuestion(String question) {
-        this.question=question;
+    public void setQuestion(String Question) {
+        this.Question = Question;
     }
 
     public void setUnit(String Unit) {
